@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cinemafinder.R
+import com.example.cinemafinder.data.Movie
+import com.example.cinemafinder.data.Utils
 import com.example.cinemafinder.databinding.FragmentMainBinding
-import com.example.cinemafinder.model.Movie
 import com.example.cinemafinder.ui.main.adapter.Adapter
 import com.example.cinemafinder.ui.main.adapter.OnItemClickListener
 
@@ -31,21 +31,20 @@ class MainFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getMovie()
-        viewModel.getMovieRate()
+        viewModel.getMovie("ru-Ru", "popularity.desc", 1)
+        viewModel.getMovie("ru-Ru", "vote_average.desc", 1)
 
-        viewModel.liveDataWithRate().observe(viewLifecycleOwner, {
-            start(it, false, binding.nowPlaying)
-        })
-
-        viewModel.liveDataWithoutRate().observe(viewLifecycleOwner, {
+        viewModel.liveDataMovieWithRate.observe(viewLifecycleOwner, {
             start(it, true, binding.upcoming)
         })
-
+        viewModel.livedataMovieWithoutRate.observe(viewLifecycleOwner, {
+            start(it, false, binding.nowPlaying)
+        })
     }
 
-    private fun start(movies: List<Movie>, boolean: Boolean, recyclerView: RecyclerView) {
+    fun start(movies: List<Movie>, boolean: Boolean, recyclerView: RecyclerView) {
         recyclerView.layoutManager =
             LinearLayoutManager(parentFragment?.context, LinearLayoutManager.HORIZONTAL, true)
         recyclerView.setHasFixedSize(true)
@@ -58,8 +57,16 @@ class MainFragment : Fragment(), OnItemClickListener {
         _binding = null
     }
 
-    override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun onItemClick(position: Int, movies: List<Movie>) {
+        val bundle = Bundle()
+        bundle.putSerializable(Utils.KEY, movies.get(position))
 
+        val fragment = DetailsFragment()
+        fragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 }

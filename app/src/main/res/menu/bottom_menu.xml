@@ -11,12 +11,4 @@
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="@string/favourite"/>
 
-    <item
-        android:id="@+id/ratings_menu"
-        android:icon="@drawable/ic_baseline_corporate_fare_24"
-        android:title="@string/ratings"/>
-
-
-
-
 </menu>

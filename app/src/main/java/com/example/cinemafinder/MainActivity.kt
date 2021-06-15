@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import com.example.cinemafinder.databinding.ActivityMainBinding
 import com.example.cinemafinder.ui.main.FavouriteFragment
 import com.example.cinemafinder.ui.main.MainFragment
-import com.example.cinemafinder.ui.main.RateFragment
 
 class MainActivity : AppCompatActivity(){
 
@@ -24,11 +23,12 @@ class MainActivity : AppCompatActivity(){
             when(it.itemId){
                 R.id.home_menu -> setFragment(MainFragment())
                 R.id.favourite_menu -> setFragment(FavouriteFragment())
-                R.id.ratings_menu -> setFragment(RateFragment())
 
             }
             true
         }
+
+
 
     }
 
