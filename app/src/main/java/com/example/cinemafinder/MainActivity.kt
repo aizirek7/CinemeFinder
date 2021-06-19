@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         setFragment(MainFragment())
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
@@ -27,9 +26,6 @@ class MainActivity : AppCompatActivity(){
             }
             true
         }
-
-
-
     }
 
     private fun setFragment(fragment: Fragment) {
@@ -39,10 +35,4 @@ class MainActivity : AppCompatActivity(){
             .addToBackStack(null)
             .commit()
     }
-
-
-
-
-
-
 }

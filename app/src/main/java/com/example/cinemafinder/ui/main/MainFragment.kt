@@ -14,6 +14,9 @@ import com.example.cinemafinder.data.Utils
 import com.example.cinemafinder.databinding.FragmentMainBinding
 import com.example.cinemafinder.ui.main.adapter.Adapter
 import com.example.cinemafinder.ui.main.adapter.OnItemClickListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment(), OnItemClickListener {
     lateinit var adapter: Adapter
@@ -31,10 +34,7 @@ class MainFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getMovie("ru-Ru", "popularity.desc", 1)
-        viewModel.getMovie("ru-Ru", "vote_average.desc", 1)
 
         viewModel.liveDataMovieWithRate.observe(viewLifecycleOwner, {
             start(it, true, binding.upcoming)
@@ -46,9 +46,10 @@ class MainFragment : Fragment(), OnItemClickListener {
 
     fun start(movies: List<Movie>, boolean: Boolean, recyclerView: RecyclerView) {
         recyclerView.layoutManager =
-            LinearLayoutManager(parentFragment?.context, LinearLayoutManager.HORIZONTAL, true)
+            LinearLayoutManager(parentFragment?.context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.setHasFixedSize(true)
-        adapter = Adapter(parentFragment?.context, boolean, movies, this)
+        adapter = Adapter(parentFragment?.context, boolean, movies.sortedByDescending { it.vote_average }, this
+        )
         recyclerView.adapter = adapter
     }
 

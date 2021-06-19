@@ -1,10 +1,11 @@
 package com.example.cinemafinder.model
 
 import com.example.cinemafinder.data.Movie
-import com.example.cinemafinder.data.Result
+import com.example.cinemafinder.data.MovieResponse
 import retrofit2.Call
+import retrofit2.Response
 
 interface RepoImple {
-    fun getMovieWithRate(api_key: String,language: String,sort_by: String,page: Int,with_watch_monetization_types: String): Call<Result>
-    fun getMovieWithoutRate(api_key: String,language: String,sort_by: String,page: Int,with_watch_monetization_types: String): Call<Result>
+    suspend fun getMovieWithRate(sort_by: String, page:Int): Response<MovieResponse>
+    suspend fun getMovieWithoutRate(sort_by: String, page: Int): Response<MovieResponse>
 }
