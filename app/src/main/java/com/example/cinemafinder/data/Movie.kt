@@ -1,6 +1,5 @@
 package com.example.cinemafinder.data
 
-import android.os.Parcelable
 import java.io.Serializable
 
 data class Movie(

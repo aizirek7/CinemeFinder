@@ -1,17 +1,17 @@
 package com.example.cinemafinder.model
 
-import com.example.cinemafinder.R
 import com.example.cinemafinder.data.Movie
-import com.example.cinemafinder.data.Result
-import com.example.cinemafinder.network.NetworkUtils
-import retrofit2.Call
+import com.example.cinemafinder.data.MovieResponse
+import com.example.cinemafinder.data.RetrofitService
+import com.example.cinemafinder.data.Utils
+import retrofit2.Response
 
-class Repository(private val networkUtils: NetworkUtils): RepoImple {
-    override fun getMovieWithRate(api_key: String, language: String, sort_by: String, page: Int, with_watch_monetization_types: String): Call<Result> {
-        return networkUtils.getMovie(api_key, language, sort_by, page, with_watch_monetization_types)
+class Repository(): RepoImple {
+    override suspend fun getMovieWithRate(sort_by: String, page: Int): Response<MovieResponse> {
+        return RetrofitService.get().getMovie(Utils.API_KEY, "ru-Ru", sort_by, page)
     }
 
-    override fun getMovieWithoutRate(api_key: String, language: String, sort_by: String, page: Int, with_watch_monetization_types: String): Call<Result> {
-        return networkUtils.getMovie(api_key, language, sort_by, page, with_watch_monetization_types)
+    override suspend fun getMovieWithoutRate(sort_by: String, page:Int): Response<MovieResponse> {
+        return RetrofitService.get().getMovie(Utils.API_KEY, "ru-Ru", sort_by, page)
     }
 }

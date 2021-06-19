@@ -1,22 +1,16 @@
 package com.example.cinemafinder.ui.main.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cinemafinder.R
 import com.example.cinemafinder.data.Movie
-import com.example.cinemafinder.data.Result
 import com.example.cinemafinder.data.Utils
 import com.example.cinemafinder.databinding.ItemMovieBinding
-import com.example.cinemafinder.ui.main.MainFragment
-import com.example.cinemafinder.ui.main.MainViewModel
 
 class Adapter(
     var context: Context?,
@@ -55,14 +49,6 @@ class Adapter(
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        if (position == movies.size - 1) {
-            if (!boolean) {
-                MainViewModel().getMovie("ru-Ru", "popularity.desc", number1++)
-            } else {
-                MainViewModel().getMovie("ru-Ru", "vote_average.desc", number2++)
-            }
-        }
-
         holder.itemView.apply {
             holder.title.text = movies[position].original_title
             holder.date.text = movies[position].release_date
